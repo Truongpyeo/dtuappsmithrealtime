@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DTU Appsmith Realtime Test</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .message-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            height: 300px;
+            overflow-y: auto;
+        }
+        .control-panel {
+            margin: 20px 0;
+        }
+        .status {
+            padding: 5px;
+            margin: 5px 0;
+            border-radius: 3px;
+        }
+        .connected {
+            background: #d4edda;
+            color: #155724;
+        }
+        .disconnected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DTU Appsmith Realtime Test</h1>
+        
+        <div class="status disconnected" id="status">
+            Disconnected
+        </div>
+
+        <div class="control-panel">
+            <button onclick="connect()">Connect</button>
+            <button onclick="disconnect()">Disconnect</button>
+        </div>
+
+        <div class="message-box" id="messages"></div>
+
+        <div class="control-panel">
+            <input type="text" id="messageInput" placeholder="Type a message">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script src="../dist/index.umd.js"></script>
+    <script>
+        let client;
+        const statusEl = document.getElementById('status');
+        const messagesEl = document.getElementById('messages');
+        const messageInput = document.getElementById('messageInput');
+
+        function addMessage(text) {
+            const div = document.createElement('div');
+            div.textContent = `${new Date().toLocaleTimeString()}: ${text}`;
+            messagesEl.appendChild(div);
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+
+        function connect() {
+            client = new DTUAppsmithRealtime({
+                url: 'ws://localhost:8080'
+            });
+
+            client.connect();
+
+            // Lắng nghe các events
+            client.on('connect', () => {
+                statusEl.textContent = 'Connected';
+                statusEl.classList.remove('disconnected');
+                statusEl.classList.add('connected');
+                addMessage('Connected to server');
+            });
+
+            client.on('disconnect', () => {
+                statusEl.textContent = 'Disconnected';
+                statusEl.classList.remove('connected');
+                statusEl.classList.add('disconnected');
+                addMessage('Disconnected from server');
+            });
+
+            client.on('message', (data) => {
+                addMessage(`Received: ${JSON.stringify(data)}`);
+            });
+        }
+
+        function disconnect() {
+            if (client) {
+                client.disconnect();
+                client = null;
+            }
+        }
+
+        function sendMessage() {
+            if (!client) {
+                alert('Please connect first');
+                return;
+            }
+
+            const message = messageInput.value;
+            if (message) {
+                client.emit('message', { text: message });
+                addMessage(`Sent: ${message}`);
+                messageInput.value = '';
+            }
+        }
+
+        // Enter key to send
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html> 

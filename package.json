@@ -1,0 +1,39 @@
+{
+  "name": "dtuappsmithrealtime",
+  "version": "1.0.1",
+  "description": "A realtime WebSocket library for Appsmith by DTU",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.esm.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "webpack --mode production",
+    "test": "node test/test-server.js",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Truongpyeo/dtuappsmithrealtime.git"
+  },
+  "keywords": [
+    "dtu",
+    "appsmith",
+    "websocket",
+    "realtime",
+    "socket"
+  ],
+  "author": "Truongpyeo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Truongpyeo/dtuappsmithrealtime/issues"
+  },
+  "homepage": "https://github.com/Truongpyeo/dtuappsmithrealtime#readme",
+  "devDependencies": {
+    "webpack": "^5.97.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "ws": "^8.16.0"
+  }
+}
