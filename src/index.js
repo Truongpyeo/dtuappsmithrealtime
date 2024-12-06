@@ -1,4 +1,7 @@
-class AppsmithRealtime {
+const AppsmithWebSocket = require('./websocket');
+const Room = require('./room');
+
+class DTUAppsmithRealtime {
     constructor(config = {}) {
         this.config = {
             url: config.url || 'ws://localhost:8080',
@@ -43,5 +46,11 @@ class AppsmithRealtime {
     }
 }
 
-// Export class trực tiếp
-module.exports = AppsmithRealtime; 
+// Export cho UMD
+if (typeof define === 'function' && define.amd) {
+    define([], function() { return DTUAppsmithRealtime; });
+} else if (typeof module === 'object' && module.exports) {
+    module.exports = DTUAppsmithRealtime;
+} else {
+    window.DTUAppsmithRealtime = DTUAppsmithRealtime;
+} 

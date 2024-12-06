@@ -5,12 +5,10 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'index.umd.js',
-        library: {
-            name: 'DTUAppsmithRealtime',
-            type: 'umd',
-            export: 'default'
-        },
-        globalObject: 'this'
+        library: 'DTUAppsmithRealtime',
+        libraryTarget: 'umd',
+        globalObject: 'this',
+        umdNamedDefine: true
     },
     mode: 'production',
     optimization: {

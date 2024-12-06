@@ -7,6 +7,7 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            font-family: Arial, sans-serif;
         }
         .message-box {
             border: 1px solid #ccc;
@@ -14,14 +15,20 @@
             margin: 10px 0;
             height: 300px;
             overflow-y: auto;
+            background: #f8f9fa;
+            border-radius: 4px;
         }
         .control-panel {
             margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
         .status {
-            padding: 5px;
+            padding: 8px 12px;
             margin: 5px 0;
-            border-radius: 3px;
+            border-radius: 4px;
+            font-weight: bold;
         }
         .connected {
             background: #d4edda;
@@ -31,90 +38,215 @@
             background: #f8d7da;
             color: #721c24;
         }
+        .error {
+            background: #fff3cd;
+            color: #856404;
+        }
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background: #007bff;
+            color: white;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            flex-grow: 1;
+        }
+        .message {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .message.sent {
+            color: #004085;
+        }
+        .message.received {
+            color: #155724;
+        }
+        .message.system {
+            color: #383d41;
+            font-style: italic;
+        }
+        .version {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>DTU Appsmith Realtime Test</h1>
+        <div class="version">Version: <span id="version">1.0.2</span></div>
         
         <div class="status disconnected" id="status">
             Disconnected
         </div>
 
         <div class="control-panel">
-            <button onclick="connect()">Connect</button>
-            <button onclick="disconnect()">Disconnect</button>
+            <button id="connectBtn" onclick="connect()">Connect</button>
+            <button id="disconnectBtn" onclick="disconnect()" disabled>Disconnect</button>
         </div>
 
         <div class="message-box" id="messages"></div>
 
         <div class="control-panel">
-            <input type="text" id="messageInput" placeholder="Type a message">
-            <button onclick="sendMessage()">Send</button>
+            <input type="text" id="messageInput" placeholder="Type a message" disabled>
+            <button id="sendBtn" onclick="sendMessage()" disabled>Send</button>
+        </div>
+
+        <div class="control-panel">
+            <select id="roomSelect" disabled>
+                <option value="">Select Room</option>
+                <option value="room1">Room 1</option>
+                <option value="room2">Room 2</option>
+            </select>
+            <button id="joinRoomBtn" onclick="joinRoom()" disabled>Join Room</button>
         </div>
     </div>
 
-    <script src="../dist/index.umd.js"></script>
     <script>
+        // Khai báo biến global
         let client;
+        let currentRoom;
         const statusEl = document.getElementById('status');
         const messagesEl = document.getElementById('messages');
         const messageInput = document.getElementById('messageInput');
+        const connectBtn = document.getElementById('connectBtn');
+        const disconnectBtn = document.getElementById('disconnectBtn');
+        const sendBtn = document.getElementById('sendBtn');
+        const roomSelect = document.getElementById('roomSelect');
+        const joinRoomBtn = document.getElementById('joinRoomBtn');
 
-        function addMessage(text) {
+        // Các hàm utility
+        function addMessage(text, type = 'system') {
             const div = document.createElement('div');
+            div.className = `message ${type}`;
             div.textContent = `${new Date().toLocaleTimeString()}: ${text}`;
             messagesEl.appendChild(div);
             messagesEl.scrollTop = messagesEl.scrollHeight;
         }
 
-        function connect() {
-            client = new DTUAppsmithRealtime({
-                url: 'ws://localhost:8080'
-            });
+        function updateUIState(isConnected) {
+            connectBtn.disabled = isConnected;
+            disconnectBtn.disabled = !isConnected;
+            messageInput.disabled = !isConnected;
+            sendBtn.disabled = !isConnected;
+            roomSelect.disabled = !isConnected;
+            joinRoomBtn.disabled = !isConnected;
+        }
 
-            client.connect();
-
-            // Lắng nghe các events
-            client.on('connect', () => {
-                statusEl.textContent = 'Connected';
-                statusEl.classList.remove('disconnected');
-                statusEl.classList.add('connected');
-                addMessage('Connected to server');
-            });
-
-            client.on('disconnect', () => {
-                statusEl.textContent = 'Disconnected';
-                statusEl.classList.remove('connected');
-                statusEl.classList.add('disconnected');
-                addMessage('Disconnected from server');
-            });
-
-            client.on('message', (data) => {
-                addMessage(`Received: ${JSON.stringify(data)}`);
+        // Load script function
+        function loadScript(url) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = url;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
             });
         }
 
-        function disconnect() {
+        // Các hàm chính
+        window.connect = function() {
+            connectBtn.disabled = true;
+            connectBtn.textContent = 'Connecting...';
+            
+            try {
+                client = new DTUAppsmithRealtime({
+                    url: 'ws://localhost:8080',
+                    autoReconnect: true
+                });
+
+                client.on('open', () => {
+                    statusEl.textContent = 'Connected';
+                    statusEl.classList.remove('disconnected', 'error');
+                    statusEl.classList.add('connected');
+                    addMessage('Connected to server');
+                    updateUIState(true);
+                    connectBtn.textContent = 'Connect';
+                });
+
+                client.on('close', () => {
+                    statusEl.textContent = 'Disconnected';
+                    statusEl.classList.remove('connected', 'error');
+                    statusEl.classList.add('disconnected');
+                    addMessage('Disconnected from server');
+                    updateUIState(false);
+                });
+
+                client.on('error', (error) => {
+                    statusEl.textContent = 'Error';
+                    statusEl.classList.remove('connected', 'disconnected');
+                    statusEl.classList.add('error');
+                    addMessage(`Error: ${error.message}`, 'error');
+                    updateUIState(false);
+                });
+
+                client.on('message', (data) => {
+                    addMessage(`Received: ${JSON.stringify(data)}`, 'received');
+                });
+
+                client.connect();
+            } catch (error) {
+                addMessage(`Connection error: ${error.message}`, 'error');
+                connectBtn.disabled = false;
+                connectBtn.textContent = 'Connect';
+            }
+        };
+
+        window.disconnect = function() {
             if (client) {
                 client.disconnect();
                 client = null;
+                currentRoom = null;
             }
-        }
+        };
 
-        function sendMessage() {
+        window.sendMessage = function() {
             if (!client) {
                 alert('Please connect first');
                 return;
             }
 
-            const message = messageInput.value;
+            const message = messageInput.value.trim();
             if (message) {
-                client.emit('message', { text: message });
-                addMessage(`Sent: ${message}`);
+                if (currentRoom) {
+                    currentRoom.broadcast('message', { text: message });
+                } else {
+                    client.emit('message', { text: message });
+                }
+                addMessage(`Sent: ${message}`, 'sent');
                 messageInput.value = '';
             }
-        }
+        };
+
+        window.joinRoom = function() {
+            const roomId = roomSelect.value;
+            if (!roomId) {
+                alert('Please select a room');
+                return;
+            }
+
+            if (currentRoom) {
+                currentRoom.leave();
+                addMessage(`Left room: ${currentRoom.roomId}`);
+            }
+
+            currentRoom = client.joinRoom(roomId);
+            addMessage(`Joined room: ${roomId}`);
+        };
 
         // Enter key to send
         messageInput.addEventListener('keypress', (e) => {
@@ -122,6 +254,25 @@
                 sendMessage();
             }
         });
+
+        // Khởi tạo app
+        async function initApp() {
+            try {
+                await loadScript('https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.0.2/dist/index.umd.js');
+                
+                if (typeof DTUAppsmithRealtime !== 'function') {
+                    throw new Error('Library not loaded correctly');
+                }
+
+                addMessage('Library loaded successfully');
+            } catch (error) {
+                console.error('Failed to load library:', error);
+                addMessage('Error loading library: ' + error.message, 'error');
+            }
+        }
+
+        // Khởi chạy app
+        initApp();
     </script>
 </body>
 </html> 
