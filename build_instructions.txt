@@ -14,7 +14,7 @@ DTU Appsmith Realtime - Build Instructions
    npm publish
 
 5. Testing CDN:
-   - Use version from: https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.0.2/dist/index.umd.js
+   - Use version from: https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.0/dist/index.umd.js
    - Open test/index.html
 
 6. Directory Structure:
