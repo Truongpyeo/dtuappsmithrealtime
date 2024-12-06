@@ -258,9 +258,11 @@
         // Khởi tạo app
         async function initApp() {
             try {
-                await loadScript('https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.0.2/dist/index.umd.js');
+                await loadScript('https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.0.5/dist/index.umd.js');
                 
-                if (typeof DTUAppsmithRealtime !== 'function') {
+                console.log('Library loaded:', window.DTUAppsmithRealtime);
+                
+                if (typeof window.DTUAppsmithRealtime !== 'function') {
                     throw new Error('Library not loaded correctly');
                 }
 
@@ -270,7 +272,6 @@
                 addMessage('Error loading library: ' + error.message, 'error');
             }
         }
-
         // Khởi chạy app
         initApp();
     </script>

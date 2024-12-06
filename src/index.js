@@ -46,11 +46,9 @@ class DTUAppsmithRealtime {
     }
 }
 
-// Export cho UMD
-if (typeof define === 'function' && define.amd) {
-    define([], function() { return DTUAppsmithRealtime; });
-} else if (typeof module === 'object' && module.exports) {
-    module.exports = DTUAppsmithRealtime;
-} else {
+// Đơn giản hóa export
+if (typeof window !== 'undefined') {
     window.DTUAppsmithRealtime = DTUAppsmithRealtime;
-} 
+}
+
+module.exports = DTUAppsmithRealtime; 
