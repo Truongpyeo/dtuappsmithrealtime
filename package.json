@@ -1,6 +1,6 @@
 {
   "name": "dtuappsmithrealtime",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A realtime WebSocket library for Appsmith by DTU",
   "main": "dist/index.umd.js",
   "module": "dist/index.esm.js",
@@ -30,6 +30,9 @@
   },
   "homepage": "https://github.com/Truongpyeo/dtuappsmithrealtime#readme",
   "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "babel-loader": "^9.2.1",
     "webpack": "^5.97.1",
     "webpack-cli": "^5.1.4"
   },
