@@ -7,13 +7,9 @@ module.exports = {
         filename: 'index.umd.js',
         library: 'DTUAppsmithRealtime',
         libraryTarget: 'umd',
-        libraryExport: 'default',
         globalObject: 'this'
     },
     mode: 'production',
-    optimization: {
-        minimize: false
-    },
     module: {
         rules: [
             {
