@@ -56,3 +56,38 @@ npm publish
 - Đảm bảo đã test kỹ trước khi push
 - Cập nhật README.md với version mới
 - Giữ changelog để track các thay đổi
+
+Hướng dẫn build DTUAppsmithRealtime
+
+1. Cài đặt dependencies:
+npm install
+
+2. Build thư viện:
+npm run build
+
+3. Test:
+npm test
+
+4. Publish:
+npm publish
+
+Yêu cầu môi trường:
+- Node.js >= 14
+- npm >= 6
+
+Cấu trúc thư mục:
+/src        - Source code
+/dist       - Build output
+/test       - Test files
+/examples   - Example usage
+
+Các script có sẵn:
+- build: Build thư viện
+- test: Chạy tests
+- prepublishOnly: Tự động build trước khi publish
+
+Lưu ý:
+- Chạy tests trước khi build
+- Update version trong package.json
+- Cập nhật CHANGELOG.md
+- Tạo git tag cho version mới

@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YourUsername/dtuappsmithrealtime.git"
+    "url": "git+https://github.com/Truongpyeo/dtuappsmithrealtime.git"
   },
   "keywords": [
     "dtu",
@@ -25,9 +25,9 @@
   "author": "DTU DZ",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/YourUsername/dtuappsmithrealtime/issues"
+    "url": "https://github.com/Truongpyeo/dtuappsmithrealtime/issues"
   },
-  "homepage": "https://github.com/YourUsername/dtuappsmithrealtime#readme",
+  "homepage": "https://github.com/Truongpyeo/dtuappsmithrealtime#readme",
   "dependencies": {
     "socket.io-client": "^4.7.4"
   },
