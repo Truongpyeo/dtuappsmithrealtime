@@ -1,6 +1,6 @@
 {
   "name": "dtuappsmithrealtime",
-  "version": "1.1.2",
+  "version": "1.0.0",
   "description": "Thư viện realtime WebSocket cho Appsmith với các chức năng của DTU",
   "main": "dist/index.umd.js",
   "files": [
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Truongpyeo/dtuappsmithrealtime.git"
+    "url": "git+https://github.com/YourUsername/dtuappsmithrealtime.git"
   },
   "keywords": [
     "dtu",
@@ -22,20 +22,20 @@
     "realtime",
     "socket"
   ],
-  "author": "Truongpyeo",
+  "author": "DTU DZ",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Truongpyeo/dtuappsmithrealtime/issues"
+    "url": "https://github.com/YourUsername/dtuappsmithrealtime/issues"
   },
-  "homepage": "https://github.com/Truongpyeo/dtuappsmithrealtime#readme",
+  "homepage": "https://github.com/YourUsername/dtuappsmithrealtime#readme",
+  "dependencies": {
+    "socket.io-client": "^4.7.4"
+  },
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "babel-loader": "^9.2.1",
     "webpack": "^5.97.1",
     "webpack-cli": "^5.1.4"
-  },
-  "dependencies": {
-    "ws": "^8.16.0"
   }
 }

@@ -5,11 +5,14 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'index.umd.js',
-        library: 'DTUAppsmithRealtime',
-        libraryTarget: 'umd',
+        library: {
+            name: 'DTUAppsmithRealtime',
+            type: 'umd',
+            export: 'default',
+            umdNamedDefine: true
+        },
         globalObject: 'this'
     },
-    mode: 'production',
     module: {
         rules: [
             {
@@ -23,5 +26,11 @@ module.exports = {
                 }
             }
         ]
+    },
+    resolve: {
+        fallback: {
+            "buffer": false,
+            "url": false
+        }
     }
 }; 
