@@ -10,6 +10,11 @@ Thư viện realtime WebSocket cho Appsmith với các chức năng của DTU.
 npm install dtuappsmithrealtime
 ```
 
+### GitHub Packages
+```bash
+npm install @Truongpyeo/dtuappsmithrealtime
+```
+
 ### CDN 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.4/dist/index.umd.js"></script>
