@@ -1,36 +1,58 @@
-DTU Appsmith Realtime - Build Instructions
+=== HƯỚNG DẪN BUILD VÀ PUBLISH DTUAPPSMITHMAP ===
 
-1. Installation:
-   npm install
+1. CẤU TRÚC THƯ MỤC
+-------------------
+DTUAppSmithMap/
+├── src/
+│   └── index.js         # Main source code
+├── dist/                # Build output
+├── .gitignore          # Git ignore file
+├── LICENSE             # MIT License
+├── README.md           # Documentation
+├── package.json        # Package config
+└── webpack.config.js   # Webpack config
 
-2. Development:
-   - Start test server: npm run test
-   - Open test/index.html in browser
+2. KIỂM TRA CÁC FILE CHÍNH
+--------------------------
+- package.json: Kiểm tra version và dependencies
+- webpack.config.js: Đảm bảo cấu hình UMD đúng
+- src/index.js: Kiểm tra code và exports
+- README.md: Cập nhật documentation nếu cần
 
-3. Build:
-   npm run build
+3. LỆNH BUILD VÀ PUBLISH
+------------------------
+# Add và commit changes
+git add .
+git commit -m "xx"
 
-4. Publishing:
-   npm publish
+# Tăng version
+npm version patch
+npm version patch --force
 
-5. Testing CDN:
-   - Use version from: https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.0/dist/index.umd.js
-   - Open test/index.html
+# Build package
+npm run build
 
-6. Directory Structure:
-   /src
-     - index.js
-     - websocket.js
-     - room.js
-   /test
-     - index.html
-     - test-server.js
-   /dist
-     - index.umd.js (after build)
+# Push lên GitHub
+git push origin master --tags
 
-7. Version Update:
-   - Update version in package.json
-   - npm run build
-   - git tag v1.0.x
-   - git push origin v1.0.x
-   - npm publish
+# Publish lên npm
+npm publish
+
+4. KIỂM TRA SAU KHI PUBLISH
+---------------------------
+- Kiểm tra package trên npm: https://www.npmjs.com/package/dtuappsmithmap
+- Kiểm tra CDN URL: https://cdn.jsdelivr.net/npm/dtuappsmithmap@2.2.0/dist/index.umd.js
+- Test trong Appsmith với URL mới
+
+5. TROUBLESHOOTING
+-----------------
+- Nếu npm publish lỗi: Kiểm tra npm login
+- Nếu git push lỗi: Pull về trước khi push
+- Nếu build lỗi: Kiểm tra webpack config và dependencies
+
+6. LƯU Ý QUAN TRỌNG
+------------------
+- Luôn kiểm tra version trước khi publish
+- Đảm bảo đã test kỹ trước khi push
+- Cập nhật README.md với version mới
+- Giữ changelog để track các thay đổi

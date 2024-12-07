@@ -364,7 +364,7 @@ export default class DTUAppsmithRealtime {
         }
 
         try {
-            // Sử dụng fetch API để l�y danh sách events
+            // Sử dụng fetch API để lấy danh sách events
             const response = await fetch(`${this.url.replace(/^ws/, 'http')}/api/available-events`);
             const data = await response.json();
             
@@ -418,6 +418,37 @@ export default class DTUAppsmithRealtime {
             emitFunction(data);
         } else {
             console.warn(`Event ${eventName} is not available`);
+        }
+    }
+
+    // Thêm phương thức để đăng ký lắng nghe sự kiện động
+    listenToEvent(eventName, callback) {
+        if (!this.isConnected) {
+            throw new Error('Must be connected to listen to events');
+        }
+
+        // Đăng ký event với EventManager
+        this.eventManager.registerEvent(eventName, {
+            handler: eventName,
+            enabled: true
+        });
+
+        // Thiết lập socket listener
+        this.socket.on(eventName, (data) => {
+            this._emit(eventName, data);
+            console.log(`Received ${eventName}:`, data);
+            if (callback) callback(data);
+        });
+
+        console.log(`Started listening to event: ${eventName}`);
+    }
+
+    // Thêm phương thức để dừng lắng nghe sự kiện
+    stopListening(eventName) {
+        if (this.socket) {
+            this.socket.off(eventName);
+            this.eventManager.removeEvent(eventName);
+            console.log(`Stopped listening to event: ${eventName}`);
         }
     }
 }
