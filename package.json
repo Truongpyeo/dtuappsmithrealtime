@@ -1,29 +1,28 @@
 {
-  "name": "dtuappsmithrealtime",
-  "version": "1.1.28",
-  "description": "Thư viện realtime Socket.IO cho Appsmith với các chức năng của DTU",
-  "main": "index.js",
-  "browser": "./dist/dtuappsmithrealtime.min.js",
+  "name": "appsmith-socketio",
+  "version": "1.0.1",
+  "description": "Thư viện Socket.IO cho Appsmith",
+  "main": "dist/appsmith-socketio.min.js",
   "files": [
-    "lib",
-    "dist",
-    "index.js"
+    "dist"
   ],
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "test": "node test/test-server.js",
-    "prepublishOnly": "npm run build"
+    "prepare": "npm run build"
   },
+  "keywords": [
+    "appsmith",
+    "socket.io",
+    "realtime"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
   "dependencies": {
-    "socket.io-client": "^4.7.2"
+    "socket.io-client": "^4.7.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.0",
-    "@babel/preset-env": "^7.26.0",
-    "babel-loader": "^9.2.1",
-    "core-js": "^3.39.0",
-    "regenerator-runtime": "^0.14.1",
-    "webpack": "^5.97.1",
-    "webpack-cli": "^5.1.4"
+    "webpack": "^5.90.1",
+    "webpack-cli": "^5.1.4",
+    "terser-webpack-plugin": "^5.3.10"
   }
 }
