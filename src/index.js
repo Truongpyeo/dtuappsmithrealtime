@@ -47,6 +47,15 @@ class Room {
 
 class DTUAppsmithRealtime {
     constructor(options = {}) {
+        if (typeof window === 'undefined' || !window.io) {
+            throw new Error(
+                'socket.io-client is required. ' +
+                'Please include https://cdn.jsdelivr.net/npm/socket.io-client@4.7.2/dist/socket.io.min.js ' +
+                'before loading this library'
+            );
+        }
+        this.io = window.io;
+        
         this.url = options.url || 'http://localhost:3555';
         this.options = options.options || {};
         this.socket = null;
@@ -61,7 +70,7 @@ class DTUAppsmithRealtime {
             try {
                 console.log('Initializing socket connection...');
                 
-                this.socket = io(this.url, {
+                this.socket = this.io(this.url, {
                     transports: ['websocket'],
                     ...this.options
                 });

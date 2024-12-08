@@ -30,6 +30,20 @@ Thêm URL sau vào Resource của Appsmith:
 https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.8/dist/index.umd.js
 ```
 
+### Appsmith Setup
+
+1. Thêm socket.io-client vào Resources của Appsmith:
+```
+https://cdn.jsdelivr.net/npm/socket.io-client@4.7.2/dist/socket.io.min.js
+```
+
+2. Thêm DTUAppsmithRealtime:
+```
+https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.8/dist/index.umd.js
+```
+
+⚠️ Lưu ý: Phải thêm socket.io-client TRƯỚC khi thêm DTUAppsmithRealtime
+
 ## 🚀 Tính năng
 
 * Kết nối realtime qua WebSocket/Socket.IO 

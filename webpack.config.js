@@ -9,13 +9,17 @@ module.exports = {
             type: 'umd',
             name: 'DTUAppsmithRealtime'
         },
-        globalObject: 'this',
-        chunkFormat: 'commonjs'
+        globalObject: 'this'
     },
     mode: 'production',
-    target: 'node',
+    target: ['web', 'es5'],
     externals: {
-        'socket.io-client': 'socket.io-client'
+        'socket.io-client': {
+            root: 'io',
+            commonjs: 'socket.io-client',
+            commonjs2: 'socket.io-client',
+            amd: 'socket.io-client'
+        }
     },
     module: {
         rules: [
@@ -25,7 +29,14 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env']
+                        presets: [
+                            ['@babel/preset-env', {
+                                targets: {
+                                    browsers: ['last 2 versions', 'ie >= 11']
+                                },
+                                modules: 'umd'
+                            }]
+                        ]
                     }
                 }
             }
@@ -36,5 +47,8 @@ module.exports = {
             "buffer": false,
             "url": false
         }
+    },
+    optimization: {
+        minimize: true
     }
 }; 
