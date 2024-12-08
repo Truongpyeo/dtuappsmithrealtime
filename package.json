@@ -1,6 +1,6 @@
 {
   "name": "dtuappsmithrealtime",
-  "version": "1.1.23",
+  "version": "1.1.25",
   "description": "Thư viện realtime Socket.IO cho Appsmith với các chức năng của DTU",
   "main": "index.js",
   "browser": "./dist/dtuappsmithrealtime.min.js",
@@ -13,6 +13,9 @@
     "build": "webpack --config webpack.config.js",
     "test": "node test/test-server.js",
     "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "socket.io-client": "^4.7.2"
   },
   "devDependencies": {
     "webpack": "^5.97.1",
