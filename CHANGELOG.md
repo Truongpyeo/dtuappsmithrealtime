@@ -2,6 +2,22 @@
 
 Tất cả những thay đổi đáng chú ý của dự án sẽ được ghi lại ở đây.
 
+## [1.1.10] - 2024-12-08
+
+### Added
+- Thêm hỗ trợ ESM (ECMAScript Modules)
+- Thêm file build index.esm.js cho modern JavaScript
+
+### Changed
+- Cải thiện cấu trúc build system
+- Tối ưu hóa bundle size
+- Cập nhật hướng dẫn cài đặt cho Appsmith
+- Thêm hướng dẫn sử dụng ESM
+
+### Fixed
+- Sửa lỗi tương thích với Appsmith
+- Cải thiện cách xử lý socket.io-client dependency
+
 ## [1.1.8] - 2024-12-08
 
 ### Changed

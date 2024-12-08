@@ -3,24 +3,19 @@ const path = require('path');
 module.exports = {
     entry: './src/index.js',
     output: {
-        filename: 'index.umd.js',
+        filename: 'index.esm.js',
         path: path.resolve(__dirname, 'dist'),
         library: {
-            name: 'DTUAppsmithRealtime',
-            type: 'umd',
-            umdNamedDefine: true
-        },
-        globalObject: 'this'
+            type: 'module'
+        }
     },
     mode: 'production',
-    target: ['web', 'es5'],
+    target: ['web', 'es2015'],
+    experiments: {
+        outputModule: true
+    },
     externals: {
-        'socket.io-client': {
-            root: 'io',
-            commonjs: 'socket.io-client',
-            commonjs2: 'socket.io-client',
-            amd: 'socket.io-client'
-        }
+        'socket.io-client': 'socket.io-client'
     },
     module: {
         rules: [
@@ -33,7 +28,7 @@ module.exports = {
                         presets: [
                             ['@babel/preset-env', {
                                 targets: {
-                                    browsers: ['last 2 versions', 'ie >= 11']
+                                    browsers: ['last 2 versions']
                                 },
                                 modules: false
                             }]

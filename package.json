@@ -1,13 +1,14 @@
 {
   "name": "dtuappsmithrealtime",
-  "version": "1.1.9",
-  "description": "Thư viện realtime WebSocket cho Appsmith với các chức năng của DTU",
+  "version": "1.1.10",
+  "description": "Thư viện realtime Socket.IO cho Appsmith với các chức năng của DTU",
   "main": "dist/index.umd.js",
+  "module": "dist/index.esm.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack --config webpack.config.js && webpack --config webpack.esm.config.js",
     "test": "node test/test-server.js",
     "prepublishOnly": "npm run build"
   },

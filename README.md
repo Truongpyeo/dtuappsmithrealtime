@@ -21,13 +21,13 @@ npm install @Truongpyeo/dtuappsmithrealtime
 
 ### CDN 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.8/dist/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.10/dist/index.umd.js"></script>
 ```
 
 ### Appsmith
 Thêm URL sau vào Resource của Appsmith:
 ```
-https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.8/dist/index.umd.js
+https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.10/dist/index.umd.js
 ```
 
 ### Appsmith Setup
@@ -39,7 +39,7 @@ https://cdn.jsdelivr.net/npm/socket.io-client@4.7.2/dist/socket.io.min.js
 
 2. Thêm DTUAppsmithRealtime:
 ```
-https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.8/dist/index.umd.js
+https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.10/dist/index.esm.js
 ```
 
 ⚠️ Lưu ý: Phải thêm socket.io-client TRƯỚC khi thêm DTUAppsmithRealtime

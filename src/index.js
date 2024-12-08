@@ -1,4 +1,4 @@
-const { io } = require('socket.io-client');
+import { io } from 'socket.io-client';
 
 class EventManager {
     constructor() {
@@ -260,4 +260,5 @@ class DTUAppsmithRealtime {
     }
 }
 
-module.exports = DTUAppsmithRealtime; 
+// Export cho cả ESM và UMD
+export default DTUAppsmithRealtime; 
