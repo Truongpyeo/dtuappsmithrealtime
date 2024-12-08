@@ -21,13 +21,13 @@ npm install @Truongpyeo/dtuappsmithrealtime
 
 ### CDN 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.4/dist/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.8/dist/index.umd.js"></script>
 ```
 
 ### Appsmith
 Thêm URL sau vào Resource của Appsmith:
 ```
-https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.4/dist/index.umd.js
+https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.8/dist/index.umd.js
 ```
 
 ## 🚀 Tính năng
