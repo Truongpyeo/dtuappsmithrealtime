@@ -1,153 +1,153 @@
-# DTU Appsmith Realtime
+# Appsmith Socket.IO Library
 
-![Version](https://img.shields.io/npm/v/dtuappsmithrealtime)
-![License](https://img.shields.io/npm/l/dtuappsmithrealtime)
-![Downloads](https://img.shields.io/npm/dt/dtuappsmithrealtime)
+Thư viện Socket.IO đơn giản để sử dụng trong Appsmith.
 
-Thư viện realtime Socket.IO cho Appsmith với các chức năng của DTU. Hỗ trợ kết nối realtime, quản lý phòng chat, và xử lý các sự kiện tùy chỉnh.
+## Cài đặt trong Appsmith
 
-## 📦 Cài đặt
+1. Thêm Socket.IO Client (bắt buộc):
 
-### NPM 
-
-```bash
-npm install dtuappsmithrealtime
+Thêm URL sau vào Appsmith Resource Manager:
+```
+https://cdn.jsdelivr.net/npm/socket.io-client@4.7.4/dist/socket.io.min.js
 ```
 
-### GitHub Packages
-```bash
-npm install @Truongpyeo/dtuappsmithrealtime
+2. Thêm Appsmith Socket.IO Library:
+```
+https://cdn.jsdelivr.net/npm/appsmith-socketio@3.0.0/dist/appsmith-socketio.min.js
 ```
 
-### CDN 
-```html
-<script src="https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.14/dist/index.umd.js"></script>
+## Cách sử dụng trong Appsmith
+
+### 1. Khởi tạo kết nối trong Page Load:
+```
+https://cdn.jsdelivr.net/npm/socket.io-client@4.7.4/dist/socket.io.min.js
 ```
 
-### Appsmith
-Thêm URL sau vào Resource của Appsmith:
+2. Thêm Appsmith Socket.IO Library:
 ```
-https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.14/dist/index.umd.js
-```
-
-### Appsmith Setup
-
-1. Thêm socket.io-client vào Resources của Appsmith:
-```
-https://cdn.jsdelivr.net/npm/socket.io-client@4.7.2/dist/socket.io.min.js
+https://cdn.jsdelivr.net/npm/appsmith-socketio@3.0.0/dist/appsmith-socketio.min.js
 ```
 
-2. Thêm DTUAppsmithRealtime:
-```
-https://cdn.jsdelivr.net/npm/dtuappsmithrealtime@1.1.14/dist/index.esm.js
-```
-
-⚠️ Lưu ý: Phải thêm socket.io-client TRƯỚC khi thêm DTUAppsmithRealtime
-
-## 🚀 Tính năng
-
-* Kết nối realtime qua WebSocket/Socket.IO 
-* Tự động kết nối lại khi mất kết nối
-* Hỗ trợ các sự kiện: message, notification, sos
-* Quản lý phòng chat (rooms)
-* Lắng nghe sự kiện động
-* Xử lý lỗi và retry tự động
-
-## 🎯 Sử dụng
-
-### Khởi tạo kết nối
+<code_block_to_apply_changes_from>
 
 ```javascript
-const client = new DTUAppsmithRealtime({
-    url: 'your_socket_url',
-    socketType: 'socketio'  // hoặc 'websocket'
-});
-
-await client.connect();
+// Page Load event
+const socket = new AppsmithSocket().connect();
+storeValue('socketClient', socket);
 ```
 
-### Lắng nghe sự kiện
+### 2. Lắng nghe events trong Page Load:
 
 ```javascript
-// Lắng nghe sự kiện cơ bản
-client.on('message', (data) => {
-    console.log('Received message:', data);
+const socket = appsmith.store.socketClient;
+
+// Lắng nghe event 'message'
+socket.on('message', (data) => {
+  // Cập nhật state hoặc widget
+  storeValue('lastMessage', data);
 });
 
-// Lắng nghe sự kiện tùy chỉnh
-client.listenToEvent('custom_event', (data) => {
-    console.log('Received custom event:', data);
+// Lắng nghe event 'notification'
+socket.on('notification', (data) => {
+  showAlert(data.message);
 });
 ```
 
-### Gửi sự kiện
+### 3. Gửi events từ Button/Widget:
 
 ```javascript
-// Gửi message
-client.emit('message', {
-    text: 'Hello world'
+// Button onClick event
+const socket = appsmith.store.socketClient;
+socket.emit('message', {
+  text: Input1.text,
+  timestamp: new Date()
 });
-
-// Gửi SOS
-client.sendSOS('Emergency message');
 ```
 
-### Quản lý phòng
+### 4. Ngắt kết nối khi rời page:
 
 ```javascript
-// Tham gia phòng
-const room = client.joinRoom('room1');
-
-// Gửi tin nhắn trong phòng
-room.broadcast('message', {
-    text: 'Hello room'
-});
-
-// Rời phòng
-room.leave();
+// Page Unload event
+const socket = appsmith.store.socketClient;
+if (socket) {
+  socket.disconnect();
+}
 ```
 
-## 📝 API Reference
+### Ví dụ hoàn chỉnh cho một chat app đơn giản:
 
-### Khởi tạo
-* `constructor(options)`: Khởi tạo client
-* `connect()`: Kết nối tới server
-* `disconnect()`: Ngắt kết nối
+1. Page Load:
 
-### Sự kiện
-* `on(event, callback)`: Đăng ký lắng nghe sự kiện
-* `off(event, callback)`: Hủy đăng ký sự kiện
-* `emit(event, data)`: Gửi sự kiện
-* `listenToEvent(eventName, callback)`: Lắng nghe sự kiện động
-* `stopListening(eventName)`: Dừng lắng nghe sự kiện
+```javascript
+// Khởi tạo socket và lưu vào store
+const socket = new AppsmithSocket().connect();
+storeValue('socketClient', socket);
 
-### Phòng
-* `joinRoom(roomId)`: Tham gia phòng
-* `leaveRoom(roomId)`: Rời phòng
-* `broadcast(roomId, event, data)`: Gửi tin nhắn trong phòng
+// Lắng nghe tin nhắn mới
+socket.on('chat_message', (data) => {
+  // Giả sử bạn có một Table widget tên là MessageTable
+  const currentMessages = MessageTable.tableData || [];
+  storeValue('messages', [...currentMessages, data]);
+});
+```
 
-### Tiện ích
-* `getState()`: Lấy trạng thái kết nối
-* `getAllEvents()`: Lấy danh sách sự kiện
-* `fetchAvailableEvents()`: Lấy sự kiện từ server
+2. Button Send Message:
 
-## 📄 License
+```javascript
+const socket = appsmith.store.socketClient;
+const message = {
+  text: MessageInput.text,
+  sender: appsmith.user.email,
+  timestamp: new Date()
+};
 
-MIT License
+// Gửi tin nhắn
+socket.emit('chat_message', message);
 
-## 💡Nhà phát triển
+// Clear input
+resetWidget('MessageInput');
+```
 
-📧 Email: thanhtruong23111999@gmail.com 
+3. Table Widget Binding:
 
-📱 Hotline: +84 376 659 652
+```javascript
+// Bind data property với
+{{appsmith.store.messages}}
+```
 
-## 📞 Liên hệ
-- Lê Thanh Trường       :  <u>thanhtruong23111999@gmail.com</u>
-- Võ Văn Việt           :  <u>vietvo371@gmail.com</u>
-- Nguyễn Ngọc Duy Thái  :  <u>kkdn011@gmail.com</u>
+## Xử lý lỗi và Reconnect
 
-*" 🏫 DTU_DZ - DUY TAN UNIVERSITY - SCS ✨"*
+```javascript
+const socket = new AppsmithSocket().connect();
 
-## Repository
+socket.on('connect_error', (error) => {
+  showAlert('Lỗi kết nối: ' + error.message, 'error');
+});
 
-[github.com/Truongpyeo/dtuappsmithrealtime](https://github.com/Truongpyeo/dtuappsmithrealtime)
+socket.on('reconnect', (attemptNumber) => {
+  showAlert('Đã kết nối lại sau ' + attemptNumber + ' lần thử');
+});
+```
+
+## API Reference
+
+### Phương thức
+- `connect(url?)`: Kết nối đến server Socket.IO
+- `emit(eventName, data)`: Gửi event
+- `on(eventName, callback)`: Lắng nghe event
+- `off(eventName)`: Hủy lắng nghe event
+- `disconnect()`: Ngắt kết nối
+
+### Events mặc định
+- `connect`: Khi kết nối thành công
+- `disconnect`: Khi mất kết nối
+- `connect_error`: Khi có lỗi kết nối
+- `reconnect`: Khi kết nối lại thành công
+```
+
+Lưu ý quan trọng:
+1. Luôn thêm Socket.IO Client trước khi thêm thư viện này
+2. Nên lưu instance socket vào store để tái sử dụng
+3. Nhớ cleanup (disconnect) khi rời page
+4. Xử lý các trường hợp mất kết nối và reconnect
+5. Không nên tạo nhiều kết nối socket trong cùng một page
