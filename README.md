@@ -1,6 +1,10 @@
-# DTUAppsmithRealtime
+# DTU Appsmith Realtime
 
-Thư viện realtime WebSocket cho Appsmith với các chức năng của DTU.
+![Version](https://img.shields.io/npm/v/dtuappsmithrealtime)
+![License](https://img.shields.io/npm/l/dtuappsmithrealtime)
+![Downloads](https://img.shields.io/npm/dt/dtuappsmithrealtime)
+
+Thư viện realtime Socket.IO cho Appsmith với các chức năng của DTU. Hỗ trợ kết nối realtime, quản lý phòng chat, và xử lý các sự kiện tùy chỉnh.
 
 ## 📦 Cài đặt
 

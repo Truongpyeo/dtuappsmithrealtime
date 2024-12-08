@@ -37,8 +37,5 @@
     "babel-loader": "^9.x.x",
     "webpack": "^5.x.x",
     "webpack-cli": "^5.x.x"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@Truongpyeo"
   }
 }
