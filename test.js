@@ -1,4 +1,4 @@
-const DTUAppsmithRealtime = require('./dist/index.umd.js').default;
+const DTUAppsmithRealtime = require('./dist/index.umd.js');
 const readline = require('readline');
 
 const rl = readline.createInterface({
@@ -6,122 +6,110 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-let client;
-let availableEvents = [];
-
-// Hàm để in menu events
-function printEventMenu() {
-    console.log('\nAvailable Events:');
-    availableEvents.forEach((event, index) => {
-        console.log(`${index + 1}. ${event.name}`);
-    });
-    console.log('0. Exit');
-}
-
-// Hàm để đọc input từ user
-function question(query) {
-    return new Promise((resolve) => {
-        rl.question(query, resolve);
-    });
-}
-
-// Hàm xử lý event được chọn
-async function handleSelectedEvent(eventIndex) {
-    if (eventIndex < 0 || eventIndex >= availableEvents.length) {
-        console.log('Invalid event index');
-        return;
+// Khởi tạo client
+const client = new DTUAppsmithRealtime({
+    url: 'https://socket.thanhtruongit.io.vn',
+    options: {
+        transports: ['websocket'],
+        autoConnect: false,
+        reconnection: true,
+        reconnectionAttempts: 5,
+        timeout: 5000
     }
+});
 
-    const selectedEvent = availableEvents[eventIndex];
-    console.log(`\nSelected event: ${selectedEvent.name}`);
+// Xử lý các sự kiện kết nối
+client.on('connect', () => {
+    console.log('Connected to server');
+    console.log('Socket ID:', client.getState().socketId);
+});
 
-    while (true) {
-        const message = await question('Enter message (or "back" to return to menu): ');
-        
-        if (message.toLowerCase() === 'back') {
-            break;
-        }
+client.on('disconnect', () => {
+    console.log('Disconnected from server');
+});
 
-        try {
-            client.emit(selectedEvent.name, { message });
-            console.log('Message sent');
-        } catch (error) {
-            console.error('Error sending message:', error.message);
-        }
-    }
-}
+client.on('error', (error) => {
+    console.log('Error:', error);
+});
 
-// Thêm hàm sleep để đ�i kết nối
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+// Lắng nghe các sự kiện từ server
+['message', 'notification', 'sos'].forEach(eventName => {
+    client.on(eventName, (data) => {
+        console.log(`\nReceived ${eventName}:`, data);
+    });
+});
 
-// Main loop
-async function main() {
+// Hàm gửi tin nhắn
+async function sendMessage(eventName, message) {
     try {
-        console.log('Connecting to server...');
-        client = new DTUAppsmithRealtime({
-            url: 'http://localhost:3555',
-            socketType: 'socketio'
-        });
-
-        // Đăng ký listeners trước khi connect
-        client.on('open', () => {
-            console.log('Connected to server');
-        });
-
-        client.on('error', (error) => {
-            console.error('Error:', error.message);
-        });
-
-        client.on('close', () => {
-            console.log('Disconnected from server');
-        });
-
-        // Lắng nghe tất cả các loại responses
-        client.on('message', (data) => {
-            console.log('\nReceived message:', data);
-        });
-
-        ['message_response', 'notification_response', 'sos_response'].forEach(event => {
-            client.on(event, (data) => {
-                console.log(`\nReceived ${event}:`, data);
+        return new Promise((resolve) => {
+            client.emit(eventName, { message }, (response) => {
+                console.log(`Response from ${eventName}:`, response);
+                resolve(response);
             });
         });
+    } catch (error) {
+        console.error('Error sending message:', error);
+        throw error;
+    }
+}
 
-        // Kết nối
-        await client.connect();
+// Menu chính
+async function showMenu() {
+    try {
+        console.log('Connecting to server...');
         
-        // Đợi một chút để đảm bảo kết nối thành công
-        await sleep(1000);
+        // Kết nối với timeout
+        const connectPromise = client.connect();
+        const timeoutPromise = new Promise((_, reject) => {
+            setTimeout(() => reject(new Error('Connection timeout')), 5000);
+        });
 
-        if (!client.isConnected) {
-            throw new Error('Failed to connect to server');
-        }
+        await Promise.race([connectPromise, timeoutPromise]);
+        console.log('Connected successfully!');
 
-        // Lấy danh sách events
-        console.log('Fetching available events...');
-        availableEvents = await client.fetchAvailableEvents();
-        console.log('\nSuccessfully connected and fetched events');
-
-        // Main loop
         while (true) {
-            printEventMenu();
-            const choice = await question('\nSelect an event (0-' + availableEvents.length + '): ');
-            
-            if (choice === '0') {
+            console.log('\nAvailable Events:');
+            console.log('1. Send Message');
+            console.log('2. Send Notification');
+            console.log('3. Send SOS');
+            console.log('0. Exit');
+
+            const answer = await new Promise(resolve => {
+                rl.question('\nSelect an option (0-3): ', resolve);
+            });
+
+            if (answer === '0') {
                 console.log('Exiting...');
                 break;
             }
 
-            const eventIndex = parseInt(choice) - 1;
-            await handleSelectedEvent(eventIndex);
-        }
+            let eventName;
+            switch (answer) {
+                case '1':
+                    eventName = 'message';
+                    break;
+                case '2':
+                    eventName = 'notification';
+                    break;
+                case '3':
+                    eventName = 'sos';
+                    break;
+                default:
+                    console.log('Invalid option');
+                    continue;
+            }
 
+            const message = await new Promise(resolve => {
+                rl.question('Enter your message: ', resolve);
+            });
+
+            await sendMessage(eventName, message);
+        }
     } catch (error) {
-        console.error('Error:', error.message);
+        console.error('Connection error:', error);
     } finally {
-        if (client) {
+        if (client.getState().isConnected) {
             client.disconnect();
         }
         rl.close();
@@ -129,12 +117,19 @@ async function main() {
 }
 
 // Chạy chương trình
-main().catch(console.error);
+showMenu().catch(error => {
+    console.error('Fatal error:', error);
+    if (client.getState().isConnected) {
+        client.disconnect();
+    }
+    rl.close();
+    process.exit(1);
+});
 
-// Cleanup khi thoát
+// Xử lý khi người dùng nhấn Ctrl+C
 process.on('SIGINT', () => {
-    console.log('\nExiting...');
-    if (client) {
+    console.log('\nClosing connection...');
+    if (client.getState().isConnected) {
         client.disconnect();
     }
     rl.close();

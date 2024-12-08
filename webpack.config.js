@@ -3,15 +3,19 @@ const path = require('path');
 module.exports = {
     entry: './src/index.js',
     output: {
-        path: path.resolve(__dirname, 'dist'),
         filename: 'index.umd.js',
+        path: path.resolve(__dirname, 'dist'),
         library: {
-            name: 'DTUAppsmithRealtime',
             type: 'umd',
-            export: 'default',
-            umdNamedDefine: true
+            name: 'DTUAppsmithRealtime'
         },
-        globalObject: 'this'
+        globalObject: 'this',
+        chunkFormat: 'commonjs'
+    },
+    mode: 'production',
+    target: 'node',
+    externals: {
+        'socket.io-client': 'socket.io-client'
     },
     module: {
         rules: [
