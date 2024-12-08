@@ -1,6 +1,6 @@
 {
   "name": "dtuappsmithrealtime",
-  "version": "1.1.17",
+  "version": "1.1.18",
   "description": "Thư viện realtime Socket.IO cho Appsmith với các chức năng của DTU",
   "main": "dist/index.umd.js",
   "files": [
