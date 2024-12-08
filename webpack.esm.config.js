@@ -1,4 +1,5 @@
 const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     entry: './src/index.js',
@@ -7,13 +8,16 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         library: {
             type: 'module'
+        },
+        environment: {
+            module: true
         }
     },
-    mode: 'production',
-    target: ['web', 'es2015'],
     experiments: {
         outputModule: true
     },
+    mode: 'production',
+    target: 'web',
     externals: {
         'socket.io-client': 'socket.io-client'
     },
@@ -38,7 +42,30 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        fallback: {
+            "buffer": false,
+            "url": false,
+            "stream": false,
+            "crypto": false
+        }
+    },
     optimization: {
-        minimize: true
+        minimize: true,
+        minimizer: [
+            new TerserPlugin({
+                terserOptions: {
+                    format: {
+                        comments: false
+                    },
+                    compress: {
+                        drop_console: true
+                    }
+                },
+                extractComments: false
+            })
+        ],
+        usedExports: true,
+        sideEffects: true
     }
 }; 

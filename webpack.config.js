@@ -1,4 +1,5 @@
 const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     entry: './src/index.js',
@@ -6,20 +7,19 @@ module.exports = {
         filename: 'index.umd.js',
         path: path.resolve(__dirname, 'dist'),
         library: {
-            name: 'DTUAppsmithRealtime',
             type: 'umd',
-            umdNamedDefine: true
+            name: 'DTUAppsmithRealtime'
         },
         globalObject: 'this'
     },
     mode: 'production',
-    target: ['web', 'es5'],
+    target: 'web',
     externals: {
         'socket.io-client': {
             root: 'io',
+            amd: 'socket.io-client',
             commonjs: 'socket.io-client',
-            commonjs2: 'socket.io-client',
-            amd: 'socket.io-client'
+            commonjs2: 'socket.io-client'
         }
     },
     module: {
@@ -33,9 +33,8 @@ module.exports = {
                         presets: [
                             ['@babel/preset-env', {
                                 targets: {
-                                    browsers: ['last 2 versions', 'ie >= 11']
-                                },
-                                modules: false
+                                    browsers: ['last 2 versions']
+                                }
                             }]
                         ]
                     }
@@ -43,7 +42,30 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        fallback: {
+            "buffer": false,
+            "url": false,
+            "stream": false,
+            "crypto": false
+        }
+    },
     optimization: {
-        minimize: true
+        minimize: true,
+        minimizer: [
+            new TerserPlugin({
+                terserOptions: {
+                    format: {
+                        comments: false
+                    },
+                    compress: {
+                        drop_console: true
+                    }
+                },
+                extractComments: false
+            })
+        ],
+        usedExports: true,
+        sideEffects: true
     }
 }; 
