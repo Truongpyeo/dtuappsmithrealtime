@@ -11,10 +11,7 @@ const client = new DTUAppsmithRealtime({
     url: 'https://socket.thanhtruongit.io.vn',
     options: {
         transports: ['websocket'],
-        autoConnect: false,
-        reconnection: true,
-        reconnectionAttempts: 5,
-        timeout: 5000
+        autoConnect: false
     }
 });
 

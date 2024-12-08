@@ -1,4 +1,4 @@
-import { io } from 'socket.io-client';
+const io = require('socket.io-client');
 
 class EventManager {
     constructor() {
@@ -47,13 +47,6 @@ class Room {
 
 class DTUAppsmithRealtime {
     constructor(options = {}) {
-        if (typeof window === 'undefined' || !window.io) {
-            throw new Error(
-                'socket.io-client is required. Please include socket.io-client script before DTUAppsmithRealtime:\n' +
-                'https://cdn.jsdelivr.net/npm/socket.io-client@4.7.2/dist/socket.io.min.js'
-            );
-        }
-
         this.url = options.url || 'http://localhost:3555';
         this.options = options.options || {};
         this.socket = null;
@@ -68,7 +61,7 @@ class DTUAppsmithRealtime {
             try {
                 console.log('Initializing socket connection...');
                 
-                this.socket = window.io(this.url, {
+                this.socket = io(this.url, {
                     transports: ['websocket'],
                     ...this.options
                 });
@@ -258,5 +251,5 @@ class DTUAppsmithRealtime {
     }
 }
 
-// Export cho cả ESM và UMD
-export default DTUAppsmithRealtime; 
+// Export cho Node.js
+module.exports = DTUAppsmithRealtime; 
