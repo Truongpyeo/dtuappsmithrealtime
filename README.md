@@ -2,6 +2,10 @@
 
 Thư viện Socket.IO đơn giản để sử dụng trong Appsmith.
 
+
+
+
+
 ## Cài đặt trong Appsmith
 
 1. Thêm Socket.IO Client (bắt buộc):
@@ -27,6 +31,10 @@ https://cdn.jsdelivr.net/npm/socket.io-client@4.7.4/dist/socket.io.min.js
 ```
 https://cdn.jsdelivr.net/npm/appsmith-socketio@3.0.0/dist/appsmith-socketio.min.js
 ```
+
+Tìm hiểu chi tiết hướng dẫn tại [Appsmith](https://docs.appsmith.com/core-concepts/writing-code/ext-libraries#prerequisites)
+
+
 
 <code_block_to_apply_changes_from>
 
@@ -143,11 +151,60 @@ socket.on('reconnect', (attemptNumber) => {
 - `disconnect`: Khi mất kết nối
 - `connect_error`: Khi có lỗi kết nối
 - `reconnect`: Khi kết nối lại thành công
-```
 
+```
 Lưu ý quan trọng:
 1. Luôn thêm Socket.IO Client trước khi thêm thư viện này
 2. Nên lưu instance socket vào store để tái sử dụng
 3. Nhớ cleanup (disconnect) khi rời page
 4. Xử lý các trường hợp mất kết nối và reconnect
 5. Không nên tạo nhiều kết nối socket trong cùng một page
+```
+
+## 💡Nhà phát triển
+
+- 📧 Email: thanhtruong23111999@gmail.com
+
+- 📱 Hotline: 0376 659 652
+
+*" 🏫 DTU_DZ - DUY TAN UNIVERSITY - SCS ✨"*
+
+## 📞 Liên hệ
+- Lê Thanh Trường       :  <u>thanhtruong23111999@gmail.com</u>
+- Võ Văn Việt           :  <u>vietvo371@gmail.com</u>
+- Nguyễn Ngọc Duy Thái  :  <u>kkdn011@gmail.com</u>
+
+## 📚 Tài liệu
+- [Hướng dẫn cài đặt](docs/setup.md)
+- [Hướng dẫn đóng góp](/CONTRIBUTING.md)
+
+## 🤝 Đóng góp
+Chúng tôi rất hoan nghênh mọi đóng góp! Xem [CONTRIBUTING](CONTRIBUTING.md) để biết thêm chi tiết.
+
+## 🔄 Quy trình phát triển
+1. Fork repo này
+2. Tạo branch mới (`git checkout -b feature/AmazingFeature`)
+3. Commit thay đổi (`git commit -m 'Add some AmazingFeature'`)
+4. Push lên branch (`git push origin feature/AmazingFeature`) 
+5. Tạo Pull Request
+
+## 🐛 Báo lỗi
+Nếu bạn phát hiện lỗi, vui lòng tạo issue mới với:
+- Mô tả chi tiết lỗi
+- Các bước tái hiện
+- Screenshots nếu có
+- Môi trường (browser, OS...)
+
+## 📜 Changelog
+Xem [CHANGELOG](CHANGELOG.md) để biết lịch sử thay đổi.
+
+## ⚖️ Code of Conduct
+Xem [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) để biết các quy tắc và hành vi được chấp nhận.
+
+## Báo cáo lỗi & Góp ý
+- Issues: [GitHub Issues](https://github.com/Truongpyeo/DTURelifeLink/issues)
+- Security: Đối với các vấn đề bảo mật nhạy cảm, vui lòng liên hệ trực tiếp qua email: <u>thanhtruong23111999@gmail.com</u>
+
+
+### 📝 License
+Dự án được phân phối dưới giấy phép [MIT License](LICENSE)
