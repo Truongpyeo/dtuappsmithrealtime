@@ -2,9 +2,6 @@
 
 Thư viện Socket.IO đơn giản để sử dụng trong Appsmith.
 
-
-
-
 ## Cài đặt trong Appsmith
 
 1. Thêm Socket.IO Client (bắt buộc):
