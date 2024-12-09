@@ -1,6 +1,6 @@
 {
   "name": "appsmith-socketio",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "description": "Thư viện Socket.IO cho Appsmith",
   "main": "dist/appsmith-socketio.min.js",
   "files": [
