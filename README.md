@@ -5,26 +5,25 @@ Thư viện Socket.IO đơn giản để sử dụng trong Appsmith.
 ## Cài đặt trong Appsmith
 
 1. Thêm Socket.IO Client (bắt buộc):
-```
+```javascript
 https://cdn.jsdelivr.net/npm/socket.io-client@4.7.4/dist/socket.io.min.js
 ```
 
 2. Thêm Appsmith Socket.IO Library:
-```
-https://cdn.jsdelivr.net/npm/appsmith-socketio@3.0.7/dist/appsmith-socketio.min.js
+```javascript
+https://cdn.jsdelivr.net/npm/appsmith-socketio@3.0.11/dist/appsmith-socketio.min.js
 ```
 
 ## Cách sử dụng trong Appsmith
 
-### 1. Khởi tạo kết nối trong Page Load:
+### 1. Khởi tạo kết nối trong Page Load
 ```javascript
 // Page Load event
 const socket = new AppsmithSocket().connect();
 storeValue('socketClient', socket);
 ```
 
-### 2. Lắng nghe events trong Page Load:
-
+### 2. Lắng nghe events trong Page Load
 ```javascript
 const socket = appsmith.store.socketClient;
 

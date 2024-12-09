@@ -2,14 +2,14 @@
 
 Tất cả những thay đổi đáng chú ý của dự án sẽ được ghi lại ở đây.
 
-## [1.1.10] - 2024-12-08
+## [3.0.10] - 2024-12-05
 
 ### Added
 - Thêm hỗ trợ ESM (ECMAScript Modules)
 - Thêm file build index.esm.js cho modern JavaScript
 
 ### Changed
-- Cải thiện cấu trúc build system
+- Cải thiện cấu trúc build system 
 - Tối ưu hóa bundle size
 - Cập nhật hướng dẫn cài đặt cho Appsmith
 - Thêm hướng dẫn sử dụng ESM
@@ -18,7 +18,7 @@ Tất cả những thay đổi đáng chú ý của dự án sẽ được ghi l
 - Sửa lỗi tương thích với Appsmith
 - Cải thiện cách xử lý socket.io-client dependency
 
-## [1.1.8] - 2024-12-08
+## [3.0.8] - 2024-12-05
 
 ### Changed
 - Loại bỏ WebSocket, chỉ sử dụng Socket.IO
@@ -35,14 +35,14 @@ Tất cả những thay đổi đáng chú ý của dự án sẽ được ghi l
 - Thêm xử lý lỗi tốt hơn
 - Thêm tính năng tự động kết nối lại
 
-## [1.1.7] - 2024-12-07
+## [3.0.7] - 2024-12-04
 
 ### Changed
 - Sửa lỗi kết nối trong môi trường Node.js
 - Cập nhật cấu hình webpack
 - Cải thiện xử lý sự kiện
 
-## [1.1.6] - 2024-12-06
+## [3.0.6] - 2024-12-03
 
 ### Added
 - Thêm hỗ trợ cho Socket.IO
@@ -52,7 +52,7 @@ Tất cả những thay đổi đáng chú ý của dự án sẽ được ghi l
 - Cập nhật cấu trúc project
 - Sửa lỗi trong việc xử lý callbacks
 
-## [1.1.5] - 2024-12-05
+## [3.0.5] - 2024-12-02
 
 ### Added
 - Phát hành phiên bản đầu tiên
@@ -62,7 +62,7 @@ Tất cả những thay đổi đáng chú ý của dự án sẽ được ghi l
   - Gửi/nhận tin nhắn
   - Xử lý sự kiện
 
-## [1.1.4] - 2024-12-04
+## [3.0.4] - 2024-12-02
 
 ### Added
 - Thêm tính năng lắng nghe sự kiện động
@@ -77,7 +77,7 @@ Tất cả những thay đổi đáng chú ý của dự án sẽ được ghi l
 - Sửa lỗi khi disconnect
 - Sửa lỗi trong quản lý phòng
 
-## [1.1.3] - 2024-12-03
+## [3.0.3] - 2024-12-03
 
 ### Added
 - Thêm tính năng quản lý phòng
@@ -87,7 +87,7 @@ Tất cả những thay đổi đáng chú ý của dự án sẽ được ghi l
 - Sửa lỗi reconnect
 - Cải thiện performance
 
-## [1.1.2] - 2024-12-02
+## [3.0.2] - 2024-12-02
 
 ### Added
 - Hỗ trợ WebSocket và Socket.IO
@@ -97,7 +97,7 @@ Tất cả những thay đổi đáng chú ý của dự án sẽ được ghi l
 - Tái cấu trúc code
 - Cập nhật dependencies
 
-## [1.1.1] - 2024-12-01
+## [3.0.1] - 2024-12-01
 
 ### Added
 - Khởi tạo dự án
@@ -108,7 +108,7 @@ Tất cả những thay đổi đáng chú ý của dự án sẽ được ghi l
 - Setup môi trường phát triển
 - Cấu hình build system
 
-## [1.1.0] - 2024-12-01
+## [3.0.0] - 2024-12-01
 
 ### Added
 - Phiên bản beta đầu tiên
