@@ -1,6 +1,6 @@
 {
   "name": "appsmith-socketio",
-  "version": "3.0.10",
+  "version": "3.0.11",
   "description": "Thư viện Socket.IO cho Appsmith",
   "main": "dist/appsmith-socketio.min.js",
   "module": "dist/appsmith-socketio.esm.js",
@@ -40,6 +40,7 @@
     "webpack-cli": "^5.1.4",
     "terser-webpack-plugin": "^5.3.10"
   },
+  "readme": "README.md",
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "dev": "webpack --mode development --watch",
