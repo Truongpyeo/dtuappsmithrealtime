@@ -4,7 +4,13 @@
   "description": "Thư viện Socket.IO cho Appsmith",
   "main": "dist/appsmith-socketio.min.js",
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CONTRIBUTING.md",
+    "CODE_OF_CONDUCT.md",
+    "SECURITY.md",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "webpack --config webpack.config.js",
@@ -15,7 +21,7 @@
     "socket.io",
     "realtime"
   ],
-  "author": "Your Name",
+  "author": "DTU DZ",
   "license": "MIT",
   "dependencies": {
     "socket.io-client": "^4.7.4"
