@@ -1,17 +1,11 @@
 {
   "name": "appsmith-socketio",
-  "version": "3.0.12",
+  "version": "3.0.13",
   "description": "Thư viện Socket.IO cho Appsmith",
   "main": "dist/appsmith-socketio.min.js",
   "module": "dist/appsmith-socketio.esm.js",
   "files": [
-    "dist",
-    "README.md",
-    "LICENSE",
-    "CONTRIBUTING.md",
-    "CODE_OF_CONDUCT.md",
-    "SECURITY.md",
-    "CHANGELOG.md"
+    "dist"
   ],
   "keywords": [
     "appsmith",
